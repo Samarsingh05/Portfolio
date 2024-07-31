@@ -441,18 +441,42 @@ html {
     margin-bottom: 1rem;
   }
 
-  .btn-view-project {
-    background-color: rgb(197, 197, 197);
-    color: var(--primary-color);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-}
-
-.btn-view-project:hover {
-    background-color: var(--primary-color);
-    color: rgb(222, 219, 219);
+  .btn-view-project,
+  .btn-live-website {
+      background-color: rgb(197, 197, 197);
+      color: var(--primary-color);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      display: inline-block;
+  }
+  
+  .btn-view-project:hover,
+  .btn-live-website:hover {
+      background-color: var(--primary-color);
+      color: rgb(222, 219, 219);
+  }
+  
+  .btn-live-website {
+      background-color: rgb(197, 197, 197);
+      color: var(--primary-color);
+  }
+  
+  .btn-live-website:hover {
+      background-color: var(--primary-color);
+      color: rgb(197, 197, 197);
+  }
+  
+  @media (max-width: 576px) {
+    .btn-view-project,
+    .btn-live-website {
+        display: block;
+        width: 100%;
+        margin-right: 0;
+    }
 }
 
 .certificates {
