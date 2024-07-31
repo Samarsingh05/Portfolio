@@ -460,16 +460,6 @@ html {
       color: rgb(222, 219, 219);
   }
   
-  .btn-live-website {
-      background-color: rgb(197, 197, 197);
-      color: var(--primary-color);
-  }
-  
-  .btn-live-website:hover {
-      background-color: var(--primary-color);
-      color: rgb(197, 197, 197);
-  }
-  
   @media (max-width: 576px) {
     .btn-view-project,
     .btn-live-website {
