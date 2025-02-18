@@ -1,0 +1,26 @@
+/*===== Clients css =====*/
+.br-client {
+	display: block;
+  .br-client-outer {
+    ul {
+      padding: 0;
+      margin: -15px;
+    }
+  }
+}
+.br-client-item {
+  display: block !important;
+  .br-client-img {
+    padding: 15px;
+  }
+	img {
+    width: 100%;
+		margin: 0 auto;
+		transition: all 0.3s ease 0s;
+    border-radius: 15px;
+		cursor: pointer;
+		outline: 0;
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.06);
+    border: 1px solid $dotted-border-color;
+	}
+}
