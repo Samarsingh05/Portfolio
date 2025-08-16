@@ -2330,6 +2330,12 @@ li.mixitup-control-active {
     color: #ff6f6f;
 }
 
+
+#service {
+  position: relative;  /* make sure it flows naturally */
+  margin-top: 5rem;    /* optional extra spacing */
+}
+
 /** End Contact Section **/
 
 /*===== Clients css =====*/
@@ -2624,9 +2630,8 @@ footer .br-footer-detail .br-social ul li a:hover {
 
   /* Add this to your style.css */
 .br-portfolio {
-    min-height: 100vh;
     height: auto;
-    margin-bottom: 143%;
+    margin-bottom: 2100px;
   }
   
   .portfolio-container {
