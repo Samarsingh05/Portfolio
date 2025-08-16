@@ -551,6 +551,7 @@ header nav button:hover {
     -ms-flex-align: center;
     align-items: center;
     position: relative;
+    padding-top: 100px;
 }
 
 .br-hero .br-text-1 {
