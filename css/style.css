@@ -2624,9 +2624,9 @@ footer .br-footer-detail .br-social ul li a:hover {
 
   /* Add this to your style.css */
 .br-portfolio {
-    min-height: 0;
+    min-height: 100vh;
     height: auto;
-    margin-bottom: 2100px;
+    /*margin-bottom: 2100px;*/
   }
   
   .portfolio-container {
