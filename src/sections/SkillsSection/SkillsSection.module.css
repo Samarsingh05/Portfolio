@@ -1,0 +1,331 @@
+.skillsSection {
+  padding: 4rem 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.functionName {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  color: var(--accent-primary);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.sectionHeader h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Editor Container */
+.editorContainer {
+  width: 100%;
+  max-width: 1100px;
+  background: var(--code-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Title Bar */
+.editorTitleBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.windowControls {
+  display: flex;
+  gap: 8px;
+}
+
+.windowControls span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.btnClose { background: #ff5f57; }
+.btnMinimize { background: #febc2e; }
+.btnMaximize { background: #28c840; }
+
+.editorTitle {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.windowActions {
+  opacity: 0.6;
+}
+
+/* Editor Body */
+.editorBody {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 500px;
+}
+
+/* Sidebar */
+.sidebar {
+  background: rgba(0, 0, 0, 0.3);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebarHeader {
+  padding: 12px 16px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.5px;
+}
+
+.fileTree {
+  padding: 0 8px;
+}
+
+.projectRoot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.folderGroup {
+  margin-left: 8px;
+}
+
+.folder {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.folder:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.chevron {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.folderIcon {
+  font-size: 0.9rem;
+}
+
+.files {
+  margin-left: 20px;
+  overflow: hidden;
+}
+
+.file {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.file:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.activeFile {
+  background: rgba(99, 102, 241, 0.2);
+  color: var(--accent-primary);
+}
+
+.fileIcon {
+  font-size: 0.8rem;
+}
+
+/* Main Editor */
+.mainEditor {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tabs */
+.editorTabs {
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-x: auto;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.activeTab {
+  background: var(--code-bg);
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--accent-primary);
+}
+
+.tabIcon {
+  font-size: 0.8rem;
+}
+
+.tabClose {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.tab:hover .tabClose {
+  opacity: 0.6;
+}
+
+/* Code Area */
+.codeArea {
+  display: flex;
+  flex: 1;
+  overflow: auto;
+}
+
+.lineNumbers {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  color: rgba(255, 255, 255, 0.3);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  text-align: right;
+  user-select: none;
+}
+
+.codeContent {
+  flex: 1;
+  padding: 16px 20px;
+  overflow: auto;
+}
+
+.codeContent pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Syntax Highlighting */
+.keyword { color: #c678dd; }
+.variable { color: #e06c75; }
+.operator { color: #56b6c2; }
+.property { color: #e5c07b; }
+.string { color: #98c379; }
+.number { color: #d19a66; }
+
+/* Skill Bars */
+.skillBars {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.skillBar {
+  margin-bottom: 1rem;
+}
+
+.skillInfo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.barTrack {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 3px;
+  box-shadow: 0 0 10px currentColor;
+}
+
+/* Status Bar */
+.statusBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 16px;
+  background: var(--accent-primary);
+  font-size: 0.7rem;
+  color: white;
+}
+
+.statusLeft, .statusRight {
+  display: flex;
+  gap: 16px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .editorBody {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .sectionHeader h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .editorTabs {
+    overflow-x: auto;
+  }
+
+  .codeContent pre {
+    font-size: 0.75rem;
+  }
+}
