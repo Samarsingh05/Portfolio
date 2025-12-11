@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSectionTracker } from '../../hooks/useIntersectionObserver';
 import { useTheme } from '../../context/ThemeContext';
