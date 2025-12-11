@@ -258,37 +258,7 @@
 .string { color: #98c379; }
 .number { color: #d19a66; }
 
-/* Skill Bars */
-.skillBars {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.skillBar {
-  margin-bottom: 1rem;
-}
-
-.skillInfo {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 6px;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.barTrack {
-  height: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.barFill {
-  height: 100%;
-  border-radius: 3px;
-  box-shadow: 0 0 10px currentColor;
-}
+/* Status Bar */
 
 /* Status Bar */
 .statusBar {
