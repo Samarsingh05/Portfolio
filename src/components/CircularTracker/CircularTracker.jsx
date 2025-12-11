@@ -5,8 +5,8 @@ import styles from './CircularTracker.module.css';
 
 /**
  * Circular Section Tracker Component
- * Half-circle design on right edge showing current section number
- * With diagonal line divisions
+ * Shows section function names arranged in a half-circle
+ * Rotates clockwise as user scrolls between sections
  */
 
 const sectionIds = [
@@ -19,33 +19,78 @@ const sectionIds = [
   'contact'
 ];
 
+const sectionNames = [
+  'About_Me()',
+  'Skills_Unlocked()',
+  'Project_Dabba()',
+  'Intern_Logs()',
+  'Degree_Ledger()',
+  'Proof_Of_Work()',
+  'Ping_Bhai()'
+];
+
 const CircularTracker = () => {
-  const { isScrolling } = useScrollTracker();
+  const { isScrolling, position } = useScrollTracker();
   const { activeSection } = useSectionTracker(sectionIds);
+
+  // Calculate rotation based on active section
+  // Each section = 360/7 degrees rotation
+  const rotationPerSection = 360 / sectionIds.length;
+  const rotation = activeSection * rotationPerSection;
 
   return (
     <AnimatePresence>
       {isScrolling && (
         <motion.div
           className={styles.trackerContainer}
-          initial={{ x: 100, opacity: 0 }}
+          initial={{ x: 150, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          exit={{ x: 100, opacity: 0 }}
+          exit={{ x: 150, opacity: 0 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
         >
-          {/* Half circle with section number */}
-          <div className={styles.halfCircle}>
-            {/* Diagonal lines */}
-            <div className={styles.diagonalLines}>
-              <span className={styles.line1}></span>
-              <span className={styles.line2}></span>
-            </div>
-            
-            {/* Section number */}
-            <div className={styles.sectionNumber}>
-              {activeSection + 1}
-            </div>
+          {/* Rotating wheel with section names */}
+          <motion.div 
+            className={styles.wheel}
+            animate={{ rotate: -rotation }}
+            transition={{ type: 'spring', stiffness: 50, damping: 15 }}
+          >
+            {sectionNames.map((name, index) => {
+              const angle = (index * 360) / sectionNames.length - 90;
+              const isActive = index === activeSection;
+              
+              return (
+                <motion.div
+                  key={name}
+                  className={`${styles.sectionLabel} ${isActive ? styles.activeLabel : ''}`}
+                  style={{
+                    transform: `rotate(${angle}deg) translateX(120px)`
+                  }}
+                >
+                  <motion.span
+                    className={styles.labelText}
+                    style={{
+                      transform: `rotate(${-angle + rotation}deg)`
+                    }}
+                    animate={{
+                      scale: isActive ? 1.1 : 0.85,
+                      opacity: isActive ? 1 : 0.4
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {name}
+                  </motion.span>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+
+          {/* Center indicator */}
+          <div className={styles.centerDot}>
+            <div className={styles.innerDot}></div>
           </div>
+
+          {/* Active section pointer */}
+          <div className={styles.pointer}></div>
         </motion.div>
       )}
     </AnimatePresence>
