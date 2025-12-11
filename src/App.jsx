@@ -1,3 +1,4 @@
+import React from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import ThemeToggle from './components/ThemeToggle/ThemeToggle';
 import CircularTracker from './components/CircularTracker/CircularTracker';

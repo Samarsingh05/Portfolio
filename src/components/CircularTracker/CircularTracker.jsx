@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useScrollTracker } from '../../hooks/useScrollTracker';
 import { useSectionTracker } from '../../hooks/useIntersectionObserver';
