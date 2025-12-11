@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 import styles from './SkillsSection.module.css';
@@ -7,7 +7,6 @@ import styles from './SkillsSection.module.css';
  * Skills_Unlocked() Section - VS Code Editor UI
  * Left: Folder tree navigation
  * Right: Syntax-highlighted skill object with tabs
- * Animations: Tab switching, code highlighting
  */
 
 const skillCategories = [
@@ -16,11 +15,11 @@ const skillCategories = [
     icon: '📁',
     file: 'frontend.tsx',
     skills: [
-      { name: 'React', level: 95, color: '#61dafb' },
-      { name: 'TypeScript', level: 90, color: '#3178c6' },
-      { name: 'Next.js', level: 85, color: '#ffffff' },
-      { name: 'Tailwind CSS', level: 92, color: '#38bdf8' },
-      { name: 'Framer Motion', level: 88, color: '#ff0080' }
+      { name: 'React', color: '#61dafb' },
+      { name: 'TypeScript', color: '#3178c6' },
+      { name: 'Next.js', color: '#ffffff' },
+      { name: 'Tailwind CSS', color: '#38bdf8' },
+      { name: 'Framer Motion', color: '#ff0080' }
     ]
   },
   {
@@ -28,11 +27,11 @@ const skillCategories = [
     icon: '📁',
     file: 'backend.py',
     skills: [
-      { name: 'Python', level: 92, color: '#3776ab' },
-      { name: 'Node.js', level: 88, color: '#68a063' },
-      { name: 'FastAPI', level: 85, color: '#009688' },
-      { name: 'PostgreSQL', level: 80, color: '#336791' },
-      { name: 'MongoDB', level: 78, color: '#47a248' }
+      { name: 'Python', color: '#3776ab' },
+      { name: 'Node.js', color: '#68a063' },
+      { name: 'FastAPI', color: '#009688' },
+      { name: 'PostgreSQL', color: '#336791' },
+      { name: 'MongoDB', color: '#47a248' }
     ]
   },
   {
@@ -40,11 +39,11 @@ const skillCategories = [
     icon: '📁',
     file: 'ml_models.py',
     skills: [
-      { name: 'TensorFlow', level: 85, color: '#ff6f00' },
-      { name: 'PyTorch', level: 80, color: '#ee4c2c' },
-      { name: 'Scikit-learn', level: 88, color: '#f7931e' },
-      { name: 'OpenCV', level: 82, color: '#5c3ee8' },
-      { name: 'Pandas', level: 90, color: '#150458' }
+      { name: 'TensorFlow', color: '#ff6f00' },
+      { name: 'PyTorch', color: '#ee4c2c' },
+      { name: 'Scikit-learn', color: '#f7931e' },
+      { name: 'OpenCV', color: '#5c3ee8' },
+      { name: 'Pandas', color: '#150458' }
     ]
   },
   {
@@ -52,11 +51,11 @@ const skillCategories = [
     icon: '📁',
     file: 'infra.yaml',
     skills: [
-      { name: 'Docker', level: 85, color: '#2496ed' },
-      { name: 'AWS', level: 78, color: '#ff9900' },
-      { name: 'Git', level: 92, color: '#f05032' },
-      { name: 'CI/CD', level: 80, color: '#40be46' },
-      { name: 'Linux', level: 85, color: '#fcc624' }
+      { name: 'Docker', color: '#2496ed' },
+      { name: 'AWS', color: '#ff9900' },
+      { name: 'Git', color: '#f05032' },
+      { name: 'CI/CD', color: '#40be46' },
+      { name: 'Linux', color: '#fcc624' }
     ]
   }
 ];
@@ -185,7 +184,7 @@ const SkillsSection = () => {
             {/* Code Area */}
             <div className={styles.codeArea}>
               <div className={styles.lineNumbers}>
-                {[...Array(20)].map((_, i) => (
+                {[...Array(15)].map((_, i) => (
                   <span key={i}>{i + 1}</span>
                 ))}
               </div>
@@ -215,49 +214,14 @@ const SkillsSection = () => {
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: i * 0.1 }}
                         >
-                          {'    '}{'{'}{'\n'}
-                          {'      '}<span className={styles.property}>name</span>:{' '}
-                          <span className={styles.string}>"{skill.name}"</span>,{'\n'}
-                          {'      '}<span className={styles.property}>proficiency</span>:{' '}
-                          <span className={styles.number}>{skill.level}</span>,{'\n'}
-                          {'      '}<span className={styles.property}>status</span>:{' '}
-                          <span className={styles.string}>"
-                            {skill.level >= 90 ? 'Expert' : skill.level >= 80 ? 'Advanced' : 'Intermediate'}
-                          "</span>{'\n'}
-                          {'    }'}{i < skillCategories[activeCategory].skills.length - 1 ? ',' : ''}{'\n'}
+                          {'    '}<span className={styles.string}>"{skill.name}"</span>
+                          {i < skillCategories[activeCategory].skills.length - 1 ? ',' : ''}{'\n'}
                         </motion.span>
                       ))}
                       {'  '}]{'\n'}
                       {'}'};
                     </code>
                   </pre>
-
-                  {/* Visual Skill Bars */}
-                  <div className={styles.skillBars}>
-                    {skillCategories[activeCategory].skills.map((skill, i) => (
-                      <motion.div 
-                        key={skill.name}
-                        className={styles.skillBar}
-                        initial={{ opacity: 0, width: 0 }}
-                        animate={{ opacity: 1, width: '100%' }}
-                        transition={{ delay: i * 0.1 + 0.3 }}
-                      >
-                        <div className={styles.skillInfo}>
-                          <span>{skill.name}</span>
-                          <span>{skill.level}%</span>
-                        </div>
-                        <div className={styles.barTrack}>
-                          <motion.div 
-                            className={styles.barFill}
-                            style={{ background: skill.color }}
-                            initial={{ width: 0 }}
-                            animate={{ width: `${skill.level}%` }}
-                            transition={{ duration: 1, delay: i * 0.1 + 0.5, ease: 'easeOut' }}
-                          />
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
                 </motion.div>
               </AnimatePresence>
             </div>
