@@ -29,8 +29,9 @@ const AboutSection = () => {
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
-  const typingSpeed = 100;
-  const lineDelay = 500;
+  const [lineComplete, setLineComplete] = useState(false);
+  const typingSpeed = 150; // Slower typing
+  const lineDelay = 600;
 
   // Reset animation when section comes into view
   useEffect(() => {
@@ -39,6 +40,7 @@ const AboutSection = () => {
       setCurrentLineIndex(0);
       setCurrentCharIndex(0);
       setIsTyping(true);
+      setLineComplete(false);
     }
   }, [isInView]);
 
@@ -52,20 +54,23 @@ const AboutSection = () => {
     const currentLine = terminalLines[currentLineIndex];
     
     if (currentCharIndex < currentLine.text.length) {
+      setLineComplete(false);
       const timeout = setTimeout(() => {
         setCurrentCharIndex(prev => prev + 1);
       }, currentLine.type === 'prompt' ? typingSpeed : typingSpeed / 2);
       return () => clearTimeout(timeout);
-    } else {
+    } else if (!lineComplete) {
       // Line complete, add to visible and move to next
+      setLineComplete(true);
       setVisibleLines(prev => [...prev, currentLine]);
       const timeout = setTimeout(() => {
         setCurrentLineIndex(prev => prev + 1);
         setCurrentCharIndex(0);
+        setLineComplete(false);
       }, lineDelay);
       return () => clearTimeout(timeout);
     }
-  }, [isTyping, currentLineIndex, currentCharIndex]);
+  }, [isTyping, currentLineIndex, currentCharIndex, lineComplete]);
 
   const sectionVariants = {
     hidden: { opacity: 0 },
@@ -137,7 +142,7 @@ const AboutSection = () => {
               </div>
             ))}
             {/* Currently typing line */}
-            {currentLineIndex < terminalLines.length && (
+            {currentLineIndex < terminalLines.length && !lineComplete && (
               <div className={styles.terminalLine}>
                 {terminalLines[currentLineIndex].type === 'prompt' ? (
                   <span className={styles.prompt}>
