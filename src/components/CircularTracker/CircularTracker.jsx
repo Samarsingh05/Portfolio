@@ -6,8 +6,8 @@ import styles from './CircularTracker.module.css';
 
 /**
  * Circular Section Tracker Component
- * Shows section function names arranged in a half-circle
- * Rotates clockwise as user scrolls between sections
+ * Centered horizontally, shows only the active section name inside
+ * Rotates clockwise when scrolling between sections
  */
 
 const sectionIds = [
@@ -34,64 +34,50 @@ const CircularTracker = () => {
   const { isScrolling, position } = useScrollTracker();
   const { activeSection } = useSectionTracker(sectionIds);
 
-  // Calculate rotation based on active section
-  // Each section = 360/7 degrees rotation
-  const rotationPerSection = 360 / sectionIds.length;
-  const rotation = activeSection * rotationPerSection;
+  // Calculate rotation based on scroll position for smooth rotation effect
+  const rotation = (position / 5) % 360;
 
   return (
     <AnimatePresence>
       {isScrolling && (
         <motion.div
           className={styles.trackerContainer}
-          initial={{ x: 150, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: 150, opacity: 0 }}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0, opacity: 0 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
         >
-          {/* Rotating wheel with section names */}
+          {/* Rotating outer ring */}
           <motion.div 
-            className={styles.wheel}
-            animate={{ rotate: -rotation }}
-            transition={{ type: 'spring', stiffness: 50, damping: 15 }}
+            className={styles.outerRing}
+            animate={{ rotate: rotation }}
+            transition={{ type: 'tween', ease: 'linear', duration: 0 }}
           >
-            {sectionNames.map((name, index) => {
-              const angle = (index * 360) / sectionNames.length - 90;
-              const isActive = index === activeSection;
-              
-              return (
-                <motion.div
-                  key={name}
-                  className={`${styles.sectionLabel} ${isActive ? styles.activeLabel : ''}`}
-                  style={{
-                    transform: `rotate(${angle}deg) translateX(120px)`
-                  }}
-                >
-                  <motion.span
-                    className={styles.labelText}
-                    style={{
-                      transform: `rotate(${-angle + rotation}deg)`
-                    }}
-                    animate={{
-                      scale: isActive ? 1.1 : 0.85,
-                      opacity: isActive ? 1 : 0.4
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {name}
-                  </motion.span>
-                </motion.div>
-              );
-            })}
+            {/* Decorative segments */}
+            {[...Array(12)].map((_, i) => (
+              <div
+                key={i}
+                className={styles.segment}
+                style={{ transform: `rotate(${i * 30}deg)` }}
+              />
+            ))}
           </motion.div>
 
-          {/* Center indicator */}
-          <div className={styles.centerDot}>
-            <div className={styles.innerDot}></div>
+          {/* Inner circle with section name */}
+          <div className={styles.innerCircle}>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={activeSection}
+                className={styles.sectionName}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+              >
+                {sectionNames[activeSection]}
+              </motion.span>
+            </AnimatePresence>
           </div>
-
-          {/* Active section pointer */}
-          <div className={styles.pointer}></div>
         </motion.div>
       )}
     </AnimatePresence>
