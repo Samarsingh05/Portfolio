@@ -306,6 +306,12 @@
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .projectsSection {
+    padding: 3rem 1.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .apiHeader {
     flex-direction: column;
@@ -324,5 +330,40 @@
 
   .sectionHeader h2 {
     font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .projectsSection {
+    padding: 2rem 1rem;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.75rem;
+  }
+
+  .functionName {
+    font-size: 0.85rem;
+  }
+
+  .method {
+    font-size: 0.6rem;
+    padding: 3px 6px;
+  }
+
+  .endpoint {
+    font-size: 0.75rem;
+  }
+
+  .description {
+    padding: 12px;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+  }
+
+  .jsonResponse code {
+    font-size: 0.7rem;
   }
 }

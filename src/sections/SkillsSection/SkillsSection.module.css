@@ -306,6 +306,12 @@
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .skillsSection {
+    padding: 3rem 1.5rem;
+  }
+}
+
 @media (max-width: 900px) {
   .editorBody {
     grid-template-columns: 1fr;
@@ -321,11 +327,47 @@
 }
 
 @media (max-width: 600px) {
+  .skillsSection {
+    padding: 2rem 1rem;
+  }
+
   .editorTabs {
     overflow-x: auto;
   }
 
   .codeContent pre {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+  }
+
+  .tab {
+    padding: 8px 12px;
+    font-size: 0.7rem;
+  }
+
+  .lineNumbers {
+    padding: 12px 8px;
+    font-size: 0.7rem;
+  }
+
+  .codeContent {
+    padding: 12px;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.75rem;
+  }
+
+  .functionName {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .editorTitleBar {
+    padding: 6px 12px;
+  }
+
+  .editorTitle {
+    display: none;
   }
 }

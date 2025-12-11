@@ -362,6 +362,12 @@
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .certificatesSection {
+    padding: 3rem 1.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .explorerContainer {
     grid-template-columns: 1fr;
@@ -390,5 +396,40 @@
 
   .sectionHeader h2 {
     font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .certificatesSection {
+    padding: 2rem 1rem;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.75rem;
+  }
+
+  .functionName {
+    font-size: 0.85rem;
+  }
+
+  .certificateGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .cardPreview {
+    height: 100px;
+  }
+
+  .modal {
+    margin: 10px;
+  }
+
+  .modalTitle {
+    font-size: 1.2rem;
+  }
+
+  .modalActions {
+    flex-direction: column;
   }
 }

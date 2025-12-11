@@ -185,26 +185,6 @@ const EducationSection = () => {
             ))}
           </div>
         </motion.div>
-
-        {/* Stats */}
-        <motion.div className={styles.statsGrid} variants={nodeVariants}>
-          <div className={styles.statCard}>
-            <span className={styles.statValue}>9.4</span>
-            <span className={styles.statLabel}>Current CGPA</span>
-          </div>
-          <div className={styles.statCard}>
-            <span className={styles.statValue}>5+</span>
-            <span className={styles.statLabel}>Research Papers</span>
-          </div>
-          <div className={styles.statCard}>
-            <span className={styles.statValue}>3x</span>
-            <span className={styles.statLabel}>Dean's List</span>
-          </div>
-          <div className={styles.statCard}>
-            <span className={styles.statValue}>10+</span>
-            <span className={styles.statLabel}>Certifications</span>
-          </div>
-        </motion.div>
       </div>
     </motion.section>
   );
