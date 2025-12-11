@@ -29,8 +29,8 @@ const AboutSection = () => {
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
-  const typingSpeed = 40;
-  const lineDelay = 300;
+  const typingSpeed = 100;
+  const lineDelay = 500;
 
   // Reset animation when section comes into view
   useEffect(() => {

@@ -41,7 +41,6 @@
 .timeline {
   position: relative;
   padding: 40px 0;
-  margin-bottom: 3rem;
 }
 
 .timelineLine {
@@ -180,44 +179,8 @@
   color: var(--accent-tertiary);
 }
 
-/* Stats Grid */
-.statsGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-
-.statCard {
-  background: var(--card-bg);
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  padding: 24px;
-  text-align: center;
-  transition: all 0.3s;
-}
-
-.statCard:hover {
-  border-color: var(--accent-primary);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px var(--shadow-color);
-}
-
-.statValue {
-  display: block;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--accent-primary);
-  margin-bottom: 4px;
-}
-
-.statLabel {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-}
-
 /* Responsive */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .timelineNodes {
     flex-wrap: wrap;
     gap: 40px;
@@ -231,23 +194,15 @@
   .timelineNode {
     width: calc(33% - 30px);
   }
-
-  .statsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
-@media (max-width: 600px) {
-  .timelineNode {
-    width: calc(50% - 20px);
-  }
-
-  .tooltip {
-    width: 240px;
-  }
-
+@media (max-width: 768px) {
   .sectionHeader h2 {
     font-size: 2rem;
+  }
+
+  .timelineNode {
+    width: calc(50% - 20px);
   }
 
   .node {
@@ -257,5 +212,26 @@
 
   .nodeIcon {
     font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .timelineNode {
+    width: 100%;
+  }
+
+  .tooltip {
+    width: 100%;
+    max-width: 280px;
+    left: 0;
+    transform: none;
+  }
+
+  .yearLabel {
+    font-size: 0.75rem;
+  }
+
+  .nodeTitle {
+    font-size: 0.75rem;
   }
 }

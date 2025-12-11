@@ -277,6 +277,12 @@
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .experienceSection {
+    padding: 3rem 1.5rem;
+  }
+}
+
 @media (max-width: 900px) {
   .diffCard {
     position: relative;
@@ -297,6 +303,10 @@
 }
 
 @media (max-width: 600px) {
+  .experienceSection {
+    padding: 2rem 1rem;
+  }
+
   .sectionHeader h2 {
     font-size: 2rem;
   }
@@ -307,5 +317,31 @@
 
   .gitGraph {
     width: 40px;
+  }
+
+  .message {
+    font-size: 0.9rem;
+  }
+
+  .branch {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionHeader h2 {
+    font-size: 1.75rem;
+  }
+
+  .functionName {
+    font-size: 0.85rem;
+  }
+
+  .diffCard {
+    width: 100%;
+  }
+
+  .diffBody {
+    font-size: 0.7rem;
   }
 }

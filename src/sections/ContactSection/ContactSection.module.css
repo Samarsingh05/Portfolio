@@ -351,6 +351,12 @@
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .contactSection {
+    padding: 3rem 1.5rem;
+  }
+}
+
 @media (max-width: 900px) {
   .contactGrid {
     grid-template-columns: 1fr;
@@ -358,6 +364,25 @@
 
   .sectionHeader h2 {
     font-size: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .contactSection {
+    padding: 2rem 1rem;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.75rem;
+  }
+
+  .functionName {
+    font-size: 0.85rem;
+  }
+
+  .socialIcon {
+    font-size: 1.4rem;
+    padding: 8px;
   }
 }
 
@@ -370,5 +395,19 @@
 
   .formRow label {
     width: auto;
+  }
+
+  .composerFooter {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sendBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footerActions {
+    justify-content: center;
   }
 }
