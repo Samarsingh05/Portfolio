@@ -1,119 +1,108 @@
 .trackerContainer {
   position: fixed;
-  left: 50%;
+  right: 0;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
   z-index: 1000;
-  width: 180px;
-  height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .outerRing {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 2px solid var(--accent-primary);
-  box-shadow: 
-    0 0 20px var(--glow-color),
-    inset 0 0 20px rgba(99, 102, 241, 0.1);
-}
-
-.segment {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 8px;
-  height: 2px;
-  background: var(--accent-primary);
-  transform-origin: left center;
-  opacity: 0.6;
-}
-
-.segment::after {
-  content: '';
-  position: absolute;
-  right: -85px;
+  width: 160px;
+  height: 320px;
+  right: -80px;
   top: 50%;
   transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
-  background: var(--accent-primary);
-  border-radius: 50%;
-  opacity: 0.4;
+  border: 2px solid var(--accent-primary);
+  border-radius: 320px 0 0 320px;
+  border-right: none;
+  opacity: 0.3;
 }
 
-.innerCircle {
+.halfCircle {
+  position: relative;
   width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  background: var(--glass-bg);
-  backdrop-filter: blur(15px);
-  border: 1px solid var(--border-color);
+  height: 280px;
+  background: var(--accent-primary);
+  border-radius: 280px 0 0 280px;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 15px;
-  box-shadow: 0 10px 40px var(--shadow-color);
+  box-shadow: -5px 0 30px rgba(99, 102, 241, 0.4);
+  padding-right: 20px;
 }
 
 .sectionName {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  color: var(--accent-primary);
+  color: white;
   text-align: center;
-  line-height: 1.3;
+  line-height: 1.4;
+  max-width: 100px;
   word-break: break-word;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-  .trackerContainer {
-    width: 140px;
-    height: 140px;
+@media (max-width: 1024px) {
+  .halfCircle {
+    width: 120px;
+    height: 240px;
+    border-radius: 240px 0 0 240px;
+    padding-right: 15px;
   }
 
-  .innerCircle {
-    width: 110px;
-    height: 110px;
-    padding: 10px;
+  .outerRing {
+    width: 140px;
+    height: 280px;
+    right: -70px;
+    border-radius: 280px 0 0 280px;
   }
 
   .sectionName {
     font-size: 0.65rem;
-  }
-
-  .segment::after {
-    right: -65px;
-    width: 5px;
-    height: 5px;
+    max-width: 85px;
   }
 }
 
-@media (max-width: 480px) {
-  .trackerContainer {
-    width: 120px;
-    height: 120px;
+@media (max-width: 768px) {
+  .halfCircle {
+    width: 100px;
+    height: 200px;
+    border-radius: 200px 0 0 200px;
+    padding-right: 12px;
   }
 
-  .innerCircle {
-    width: 90px;
-    height: 90px;
-    padding: 8px;
+  .outerRing {
+    width: 120px;
+    height: 240px;
+    right: -60px;
+    border-radius: 240px 0 0 240px;
   }
 
   .sectionName {
     font-size: 0.55rem;
+    max-width: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .halfCircle {
+    width: 80px;
+    height: 160px;
+    border-radius: 160px 0 0 160px;
+    padding-right: 10px;
   }
 
-  .segment::after {
-    right: -55px;
-    width: 4px;
-    height: 4px;
+  .outerRing {
+    width: 100px;
+    height: 200px;
+    right: -50px;
+    border-radius: 200px 0 0 200px;
+  }
+
+  .sectionName {
+    font-size: 0.5rem;
+    max-width: 55px;
   }
 }
