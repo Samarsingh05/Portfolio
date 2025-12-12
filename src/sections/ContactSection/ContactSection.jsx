@@ -231,7 +231,7 @@ const ContactSection = () => {
               <div className={styles.cardIcon}>📱</div>
               <div className={styles.cardInfo}>
                 <span className={styles.cardLabel}>Phone</span>
-                <span className={styles.cardValue}>+91 98765 43210</span>
+                <span className={styles.cardValue}>+91 70071 54128</span>
               </div>
               <motion.a 
                 href="tel:+917007154128"
