@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
 /* Global Design System Variables */
 :root {
   /* Light Mode Colors */
@@ -93,9 +95,20 @@ a {
   overflow: hidden;
 }
 
-/* Font Import */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* Glow title effect */
+.glow-title {
+  position: relative;
+  display: inline-block;
+  transition: text-shadow 0.2s ease, color 0.2s ease;
+}
 
+.glow-title:hover {
+  text-shadow:
+    var(--gx, 0px) var(--gy, 0px) 14px var(--accent-primary),
+    0 0 22px rgba(0, 0, 0, 0.2);
+}
+
+/* Font Import */
 code, pre, .mono {
   font-family: 'JetBrains Mono', monospace;
 }

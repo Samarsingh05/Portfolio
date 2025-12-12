@@ -3,6 +3,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import ThemeToggle from './components/ThemeToggle/ThemeToggle';
 import CircularTracker from './components/CircularTracker/CircularTracker';
 import BackgroundTransition from './components/BackgroundTransition/BackgroundTransition';
+import Navbar from './components/Navbar/Navbar';
 import AboutSection from './sections/AboutSection/AboutSection';
 import SkillsSection from './sections/SkillsSection/SkillsSection';
 import ProjectsSection from './sections/ProjectsSection/ProjectsSection';
@@ -22,6 +23,9 @@ const App = () => {
     <ThemeProvider>
       {/* Animated background that transitions between sections */}
       <BackgroundTransition />
+      
+      {/* Navbar */}
+      <Navbar />
       
       {/* Theme toggle button (light/dark mode) */}
       <ThemeToggle />

@@ -10,75 +10,37 @@ import styles from './ExperienceSection.module.css';
 
 const experiences = [
   {
-    hash: 'e14f23a',
-    date: 'Jun 2024',
-    message: 'Joined TechCorp as ML Engineer Intern',
-    branch: 'feature/ml-pipeline',
-    author: 'arjun.sharma',
-    company: 'TechCorp',
-    role: 'ML Engineer Intern',
-    duration: 'Jun 2024 - Present',
+    hash: 'f8d91ee',
+    date: 'May 2025',
+    message: 'Joined Vmerg Media Pvt. Ltd. as Full Stack Developer Intern',
+    branch: 'feature/web-platform',
+    author: 'samar.singh',
+    company: 'Vmerg Media Pvt. Ltd.',
+    role: 'Full Stack Developer Intern',
+    duration: 'May 2025 - July 2025',
     diff: {
       added: [
-        'Built automated ML pipeline reducing training time by 40%',
-        'Implemented real-time anomaly detection system',
-        'Collaborated with 5+ cross-functional teams'
+        'Delivered two production-ready modules for a live commercial web application',
+        'Built and documented scalable, reusable UI components, reducing duplicate code by 25%'
       ],
-      tech: ['Python', 'TensorFlow', 'AWS SageMaker', 'Docker']
-    }
-  },
-  {
-    hash: 'b72d11c',
-    date: 'Jan 2024',
-    message: 'Joined DataVerse as Data Science Intern',
-    branch: 'feature/data-analysis',
-    author: 'arjun.sharma',
-    company: 'DataVerse',
-    role: 'Data Science Intern',
-    duration: 'Jan 2024 - May 2024',
-    diff: {
-      added: [
-        'Developed predictive models with 92% accuracy',
-        'Created automated reporting dashboards',
-        'Processed 1M+ data points daily'
-      ],
-      tech: ['Python', 'Pandas', 'Scikit-learn', 'Tableau']
+      tech: ['TypeScript', 'React', 'Node.js', 'Git']
     }
   },
   {
     hash: 'a93c42f',
-    date: 'Jul 2023',
-    message: 'Joined StartupX as Full Stack Developer Intern',
+    date: 'June 2024',
+    message: 'Joined Tru Value Overseas Pvt. Ltd. as Web Developer Intern',
     branch: 'feature/web-platform',
-    author: 'arjun.sharma',
-    company: 'StartupX',
-    role: 'Full Stack Developer Intern',
-    duration: 'Jul 2023 - Dec 2023',
+    author: 'samar.singh',
+    company: 'Tru Value Overseas Pvt. Ltd.',
+    role: 'Web Developer Intern',
+    duration: 'June 2024 - July 2024',
     diff: {
       added: [
-        'Built customer portal from scratch (React + Node)',
-        'Improved page load time by 60%',
-        'Implemented CI/CD pipeline'
+        'Revamped the B2B export portal with responsive layouts',
+        'Cut page load times by ~30%'
       ],
-      tech: ['React', 'Node.js', 'PostgreSQL', 'AWS']
-    }
-  },
-  {
-    hash: 'f8d91ee',
-    date: 'Mar 2023',
-    message: 'Started open source contributions',
-    branch: 'contrib/opensource',
-    author: 'arjun.sharma',
-    company: 'Open Source',
-    role: 'Contributor',
-    duration: 'Mar 2023 - Present',
-    diff: {
-      added: [
-        'Contributed to TensorFlow.js documentation',
-        'Fixed 10+ bugs in popular React libraries',
-        'Maintained personal npm packages (500+ weekly downloads)'
-      ],
-      tech: ['TypeScript', 'React', 'Node.js', 'Git']
+      tech: ['React', 'Node.js', 'Rest API']
     }
   }
 ];
@@ -87,6 +49,14 @@ const ExperienceSection = () => {
   const { ref, isInView } = useIntersectionObserver({ threshold: 0.2 });
   const [hoveredCommit, setHoveredCommit] = useState(null);
   const [selectedCommit, setSelectedCommit] = useState(null);
+
+  const handleGlowMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 16;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 16;
+    e.currentTarget.style.setProperty('--gx', `${x}px`);
+    e.currentTarget.style.setProperty('--gy', `${y}px`);
+  };
 
   const sectionVariants = {
     hidden: { opacity: 0 },
@@ -109,10 +79,17 @@ const ExperienceSection = () => {
     >
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
-          <motion.span className={styles.functionName} variants={commitVariants}>
-            Intern_Logs()
-          </motion.span>
-          <motion.h2 variants={commitVariants}>Git History</motion.h2>
+          <motion.h2
+            variants={commitVariants}
+            className="glow-title"
+            onMouseMove={handleGlowMove}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.setProperty('--gx', '0px');
+              e.currentTarget.style.setProperty('--gy', '0px');
+            }}
+          >
+            Internships
+          </motion.h2>
           <motion.p variants={commitVariants}>
             My professional journey in commits
           </motion.p>
@@ -173,7 +150,7 @@ const ExperienceSection = () => {
                   <AnimatePresence>
                     {(hoveredCommit === exp.hash || selectedCommit === exp.hash) && (
                       <motion.div
-                        className={styles.diffCard}
+                        className={`${styles.diffCard} ${index === experiences.length - 1 ? styles.diffCardLast : ''} ${index === 0 ? styles.diffCardFirst : ''}`}
                         initial={{ opacity: 0, x: 20, scale: 0.95 }}
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         exit={{ opacity: 0, x: 20, scale: 0.95 }}

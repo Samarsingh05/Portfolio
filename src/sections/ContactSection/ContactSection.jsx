@@ -21,6 +21,14 @@ const ContactSection = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState(null);
 
+  const handleGlowMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 16;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 16;
+    e.currentTarget.style.setProperty('--gx', `${x}px`);
+    e.currentTarget.style.setProperty('--gy', `${y}px`);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -31,11 +39,51 @@ const ContactSection = () => {
     setTypingTimeout(setTimeout(() => setIsTyping(false), 1000));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    // dynamic import and normalize default
+    const emailjsModule = await import('@emailjs/browser');
+    const emailjs = emailjsModule?.default || emailjsModule;
+
+    // read credentials from env (will be undefined if not loaded)
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    console.log('EmailJS creds', { serviceId, templateId, publicKey });
+
+    if (!serviceId || !templateId || !publicKey) {
+      alert('EmailJS credentials missing — check your .env and restart dev server.');
+      return;
+    }
+
+    // initialize EmailJS (recommended)
+    emailjs.init(publicKey);
+
+    // template params — match these keys with your EmailJS template variables
+    const templateParams = {
+      to_email: '2003singhsamar@gmail.com',
+      from_name: formData.name,
+      from_email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+    };
+
+    const resp = await emailjs.send(serviceId, templateId, templateParams);
+    console.log('EmailJS response', resp);
+
+    alert('Message sent successfully!');
+    setFormData({ name: '', email: '', subject: '', message: '' });
+  } catch (error) {
+    // EmailJS errors often include a text/status — show it
+    console.error('Error sending email:', error);
+    const msg = error?.text || error?.message || JSON.stringify(error);
+    alert('Failed to send message. ' + msg);
+  }
+};
+
 
   const sectionVariants = {
     hidden: { opacity: 0 },
@@ -68,10 +116,17 @@ const ContactSection = () => {
 
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
-          <motion.span className={styles.functionName} variants={itemVariants}>
-            Ping_Bhai()
-          </motion.span>
-          <motion.h2 variants={itemVariants}>Let's Connect</motion.h2>
+          <motion.h2
+            variants={itemVariants}
+            className="glow-title"
+            onMouseMove={handleGlowMove}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.setProperty('--gx', '0px');
+              e.currentTarget.style.setProperty('--gy', '0px');
+            }}
+          >
+            Let's Connect
+          </motion.h2>
           <motion.p variants={itemVariants}>
             Drop me a message – I'd love to hear from you!
           </motion.p>
@@ -97,7 +152,7 @@ const ContactSection = () => {
                 <label>To:</label>
                 <input 
                   type="text" 
-                  value="arjun.sharma@email.com" 
+                  value="2003singhsamar@gmail.com" 
                   readOnly
                   className={styles.readOnly}
                 />
@@ -179,7 +234,7 @@ const ContactSection = () => {
                 <span className={styles.cardValue}>+91 98765 43210</span>
               </div>
               <motion.a 
-                href="tel:+919876543210"
+                href="tel:+917007154128"
                 className={styles.cardAction}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
@@ -196,10 +251,10 @@ const ContactSection = () => {
               <div className={styles.cardIcon}>📧</div>
               <div className={styles.cardInfo}>
                 <span className={styles.cardLabel}>Email</span>
-                <span className={styles.cardValue}>arjun.sharma@email.com</span>
+                <span className={styles.cardValue}>2003singhsamar@gmail.com</span>
               </div>
               <motion.a 
-                href="mailto:arjun.sharma@email.com"
+                href="mailto:2003singhsamar@gmail.com"
                 className={styles.cardAction}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
@@ -210,49 +265,27 @@ const ContactSection = () => {
 
             {/* Location Card */}
             <motion.div 
-              className={styles.contactCard}
-              whileHover={{ scale: 1.02, y: -5 }}
-            >
-              <div className={styles.cardIcon}>📍</div>
-              <div className={styles.cardInfo}>
-                <span className={styles.cardLabel}>Location</span>
-                <span className={styles.cardValue}>Bangalore, India</span>
-              </div>
-              <motion.a 
-                href="https://maps.google.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.cardAction}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+                className={styles.contactCard}
+                whileHover={{ scale: 1.02, y: -5 }}
               >
-                🗺️
-              </motion.a>
-            </motion.div>
+                <div className={styles.cardIcon}>📍</div>
+                <div className={styles.cardInfo}>
+                  <span className={styles.cardLabel}>Location</span>
+                  <span className={styles.cardValue}>Bangalore, India</span>
+                </div>
+                <motion.a 
+                  href="https://www.google.com/maps?q=PESIT+Campus,+100+ft+Ring+Road,+Outer+Ring+Rd,+Dwaraka+Nagar,+Banashankari,+Bengaluru,+Karnataka+560085"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.cardAction}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  🗺️
+                </motion.a>
+              </motion.div>
 
-            {/* Social Links */}
-            <div className={styles.socialLinks}>
-              <span className={styles.socialLabel}>Find me on</span>
-              <div className={styles.socialIcons}>
-                {[
-                  { icon: '💼', name: 'LinkedIn', url: '#' },
-                  { icon: '🐙', name: 'GitHub', url: '#' },
-                  { icon: '🐦', name: 'Twitter', url: '#' },
-                  { icon: '📸', name: 'Instagram', url: '#' }
-                ].map((social) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.url}
-                    className={styles.socialIcon}
-                    whileHover={{ scale: 1.2, y: -5 }}
-                    whileTap={{ scale: 0.9 }}
-                    title={social.name}
-                  >
-                    {social.icon}
-                  </motion.a>
-                ))}
-              </div>
-            </div>
+
 
             {/* Availability Status */}
             <motion.div 
@@ -273,8 +306,8 @@ const ContactSection = () => {
 
         {/* Footer */}
         <motion.footer className={styles.footer} variants={itemVariants}>
-          <p>Designed & Built by <span>Arjun Sharma</span> © 2024</p>
-          <p className={styles.footerNote}>Made with ☕ and lots of Framer Motion</p>
+          <p>Designed & Built by <span>Samar Singh</span> © 2025</p>
+          <p className={styles.footerNote}>Made with lots of ☕</p>
         </motion.footer>
       </div>
     </motion.section>

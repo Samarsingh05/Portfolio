@@ -27,6 +27,12 @@
   color: var(--text-primary);
 }
 
+.sectionSubtext {
+  margin-top: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
 /* Editor Container */
 .editorContainer {
   width: 100%;
@@ -202,6 +208,11 @@
   background: var(--code-bg);
   color: var(--text-primary);
   border-bottom: 2px solid var(--accent-primary);
+}
+
+:global([data-theme="light"]) .activeTab {
+  color: #fff;
+  background: #2d2f3a;
 }
 
 .tabIcon {

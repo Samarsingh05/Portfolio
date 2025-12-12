@@ -15,6 +15,9 @@ const skillCategories = [
     icon: '📁',
     file: 'frontend.tsx',
     skills: [
+      { name: 'HTML', color: '#61dafb' },
+      { name: 'CSS', color: '#61dafb' },
+      { name: 'JavaScript', color: '#61dafb' },
       { name: 'React', color: '#61dafb' },
       { name: 'TypeScript', color: '#3178c6' },
       { name: 'Next.js', color: '#ffffff' },
@@ -65,6 +68,14 @@ const SkillsSection = () => {
   const [activeCategory, setActiveCategory] = useState(0);
   const [expandedFolders, setExpandedFolders] = useState(['frontend', 'backend', 'ml_ai', 'devops']);
 
+  const handleGlowMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 16;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 16;
+    e.currentTarget.style.setProperty('--gx', `${x}px`);
+    e.currentTarget.style.setProperty('--gy', `${y}px`);
+  };
+
   const toggleFolder = (name) => {
     setExpandedFolders(prev => 
       prev.includes(name) ? prev.filter(f => f !== name) : [...prev, name]
@@ -98,10 +109,20 @@ const SkillsSection = () => {
       animate={isInView ? 'visible' : 'hidden'}
     >
       <div className={styles.sectionHeader}>
-        <motion.span className={styles.functionName} variants={editorVariants}>
-          Skills_Unlocked()
-        </motion.span>
-        <motion.h2 variants={editorVariants}>Technical Arsenal</motion.h2>
+        <motion.h2
+          variants={editorVariants}
+          className="glow-title"
+          onMouseMove={handleGlowMove}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.setProperty('--gx', '0px');
+            e.currentTarget.style.setProperty('--gy', '0px');
+          }}
+        >
+          Technical Arsenal
+        </motion.h2>
+        <motion.p variants={editorVariants} className={styles.sectionSubtext}>
+          Tools and stacks I know.
+        </motion.p>
       </div>
 
       <motion.div className={styles.editorContainer} variants={editorVariants}>

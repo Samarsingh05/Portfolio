@@ -4,8 +4,9 @@
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 1400px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .sectionHeader {
@@ -188,12 +189,29 @@
   top: 50%;
   transform: translateY(-50%);
   width: 350px;
+  max-width: calc(100vw - 40px);
+  max-height: calc(100vh - 40px);
   background: var(--code-bg);
   border-radius: 10px;
   border: 1px solid var(--border-color);
-  overflow: hidden;
+  overflow-y: auto;
   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
   z-index: 10;
+}
+
+.diffCardLast {
+  right: auto !important;
+  left: 24px !important;
+  top: auto !important;
+  bottom: 0 !important;
+  transform: translateY(0) !important;
+  max-height: calc(100vh - 20px) !important;
+}
+
+.diffCardFirst {
+  top: 0 !important;
+  transform: translateY(0) !important;
+  max-height: calc(100vh - 20px) !important;
 }
 
 .diffHeader {
@@ -225,6 +243,8 @@
   padding: 14px 18px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.8rem;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .diffLine {
@@ -245,6 +265,7 @@
   gap: 6px;
   padding: 12px 18px;
   background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .techTag {

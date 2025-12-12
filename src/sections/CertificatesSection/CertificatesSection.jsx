@@ -7,42 +7,54 @@ import styles from './CertificatesSection.module.css';
  * Proof_Of_Work() Section - File Explorer UI
  * Left: Folder tree (Google, Coursera, AWS...)
  * Right: Certificate preview grid
- * Click opens certificate modal
+ * Click opens certificate modal (View Certificate opens in new tab)
  */
 
 const certificateData = {
   google: {
-    name: 'Google',
+    name: 'Kaggle',
     icon: '🔵',
     certificates: [
-      { id: 1, name: 'Google Cloud Professional', date: 'Mar 2024', credential: 'GCP-12345' },
-      { id: 2, name: 'TensorFlow Developer', date: 'Jan 2024', credential: 'TF-67890' },
-      { id: 3, name: 'Data Analytics Professional', date: 'Nov 2023', credential: 'GA-11111' }
+      {
+        id: 1,
+        name: 'Introduction to Python',
+        date: 'June 2024',
+        credential: 'GCP-12345',
+        url: 'https://drive.google.com/file/d/1Mf510pug_mCCNQrqNgQjay4yGlbF3pSf/view?usp=sharing'
+      }
     ]
   },
   coursera: {
-    name: 'Coursera',
+    name: 'Hackerrank',
     icon: '🟦',
     certificates: [
-      { id: 4, name: 'Deep Learning Specialization', date: 'Oct 2023', credential: 'DL-22222' },
-      { id: 5, name: 'Machine Learning by Stanford', date: 'Aug 2023', credential: 'ML-33333' },
-      { id: 6, name: 'Full Stack Web Development', date: 'Jun 2023', credential: 'FS-44444' }
+      {
+        id: 2,
+        name: 'SQL Intermediate',
+        date: 'Nov 2024',
+        credential: '31768BE50AE8',
+        url: 'https://drive.google.com/file/d/1SRc34pYxXY0Mdf8o4YUY9Vb1sOoFqBCa/view?usp=sharing'
+      },
+      {
+        id: 3,
+        name: 'Java Basic',
+        date: 'April 2024',
+        credential: 'A26C8CA61051',
+        url: 'https://drive.google.com/file/d/1ARRMf_fl-zYaBCbViP4qLnbMxYIHZFzQ/view?usp=sharing'
+      }
     ]
   },
   aws: {
-    name: 'AWS',
+    name: '100xDevs',
     icon: '🟧',
     certificates: [
-      { id: 7, name: 'AWS Solutions Architect', date: 'Feb 2024', credential: 'AWS-55555' },
-      { id: 8, name: 'AWS Developer Associate', date: 'Dec 2023', credential: 'AWS-66666' }
-    ]
-  },
-  meta: {
-    name: 'Meta',
-    icon: '🔷',
-    certificates: [
-      { id: 9, name: 'React Advanced Concepts', date: 'Apr 2024', credential: 'META-77777' },
-      { id: 10, name: 'Front-End Developer', date: 'Feb 2024', credential: 'META-88888' }
+      {
+        id: 4,
+        name: '0-100 Full Stack Web Development',
+        date: 'Jan 2025',
+        credential: 'QGTL2393',
+        url: 'https://drive.google.com/file/d/1Wu51Nm7F0hy7gBW0tPi87MMw-0LZo_Wf/view?usp=sharing'
+      }
     ]
   }
 };
@@ -51,6 +63,14 @@ const CertificatesSection = () => {
   const { ref, isInView } = useIntersectionObserver({ threshold: 0.2 });
   const [activeFolder, setActiveFolder] = useState('google');
   const [selectedCert, setSelectedCert] = useState(null);
+
+  const handleGlowMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 16;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 16;
+    e.currentTarget.style.setProperty('--gx', `${x}px`);
+    e.currentTarget.style.setProperty('--gy', `${y}px`);
+  };
 
   const sectionVariants = {
     hidden: { opacity: 0 },
@@ -73,10 +93,16 @@ const CertificatesSection = () => {
     >
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
-          <motion.span className={styles.functionName}>
-            Proof_Of_Work()
-          </motion.span>
-          <motion.h2>Certificates</motion.h2>
+          <motion.h2
+            className="glow-title"
+            onMouseMove={handleGlowMove}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.setProperty('--gx', '0px');
+              e.currentTarget.style.setProperty('--gy', '0px');
+            }}
+          >
+            Certificates
+          </motion.h2>
           <motion.p>Verified achievements & credentials</motion.p>
         </div>
 
@@ -194,20 +220,17 @@ const CertificatesSection = () => {
                       <span>🔐 Credential ID: {selectedCert.credential}</span>
                     </p>
                     <div className={styles.modalActions}>
-                      <motion.button 
+                      {/* View Certificate - opens in new tab */}
+                      <motion.a
                         className={styles.verifyBtn}
+                        href={selectedCert.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        Verify Certificate
-                      </motion.button>
-                      <motion.button 
-                        className={styles.downloadBtn}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        Download PDF
-                      </motion.button>
+                        View Certificate
+                      </motion.a>
                     </div>
                   </div>
                 </div>

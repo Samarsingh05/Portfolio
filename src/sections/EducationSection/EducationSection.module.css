@@ -74,15 +74,15 @@
 
 .yearLabel {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 12px;
   transition: color 0.3s;
 }
 
 .node {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background: var(--card-bg);
   border: 3px solid var(--border-color);
@@ -94,16 +94,16 @@
 }
 
 .nodeIcon {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .nodeTitle {
   margin-top: 12px;
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   font-weight: 600;
   text-align: center;
   transition: color 0.3s;
-  max-width: 100px;
+  max-width: 120px;
 }
 
 /* Tooltip */
@@ -113,13 +113,26 @@
   left: 50%;
   transform: translateX(-50%);
   margin-top: 20px;
-  width: 280px;
+  width: 380px;
+  max-width: calc(100vw - 40px);
   background: var(--card-bg);
   border-radius: 12px;
   border: 1px solid var(--border-color);
-  padding: 18px;
+  padding: 24px;
   box-shadow: 0 15px 50px var(--shadow-color);
   z-index: 100;
+}
+
+.timelineNode:last-child .tooltip {
+  left: auto;
+  right: 0;
+  transform: translateX(0);
+}
+
+.timelineNode:last-child .tooltip::before {
+  left: auto;
+  right: 20px;
+  transform: translateX(0);
 }
 
 .tooltip::before {
@@ -139,44 +152,45 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
 .tooltipTitle {
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.3rem;
   color: var(--text-primary);
 }
 
 .tooltipGrade {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   color: var(--accent-primary);
   font-weight: 600;
 }
 
 .tooltipInstitution {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: var(--accent-secondary);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .tooltipDesc {
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   color: var(--text-secondary);
-  line-height: 1.5;
-  margin-bottom: 12px;
+  line-height: 1.6;
+  margin-bottom: 16px;
 }
 
 .tooltipAchievements {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .achievementTag {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   color: var(--accent-tertiary);
+  line-height: 1.5;
 }
 
 /* Responsive */
@@ -206,12 +220,12 @@
   }
 
   .node {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
   }
 
   .nodeIcon {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
   }
 }
 
@@ -228,10 +242,36 @@
   }
 
   .yearLabel {
-    font-size: 0.75rem;
+    font-size: 0.95rem;
   }
 
   .nodeTitle {
-    font-size: 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  .tooltip {
+    width: 100%;
+    max-width: 320px;
+    padding: 20px;
+  }
+
+  .tooltipTitle {
+    font-size: 1.1rem;
+  }
+
+  .tooltipGrade {
+    font-size: 0.95rem;
+  }
+
+  .tooltipInstitution {
+    font-size: 0.9rem;
+  }
+
+  .tooltipDesc {
+    font-size: 0.85rem;
+  }
+
+  .achievementTag {
+    font-size: 0.8rem;
   }
 }

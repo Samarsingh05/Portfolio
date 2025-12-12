@@ -17,11 +17,11 @@ const sectionIds = [
 const sectionNames = [
   'About_Me()',
   'Skills_Unlocked()',
-  'Project_Dabba()',
+  'Projects_Products()',
   'Intern_Logs()',
-  'Degree_Ledger()',
-  'Proof_Of_Work()',
-  'Ping_Bhai()'
+  'Padhai_Likhai()',
+  'Certificates()',
+  'Ping_Me()'
 ];
 
 const CircularTracker = () => {

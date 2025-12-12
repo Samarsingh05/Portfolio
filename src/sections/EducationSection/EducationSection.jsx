@@ -14,67 +14,76 @@ const education = [
     id: 1,
     year: '2018',
     title: 'Class 10th',
-    institution: 'St. Xavier\'s High School',
-    grade: '94.6%',
-    description: 'CBSE Board - Science stream with distinction in Mathematics',
+    institution: 'Sri Venkateshwara International School, New Delhi',
+    grade: '90.5%',
+    description: 'CBSE Board',
     icon: '🏫',
-    achievements: ['School topper in Mathematics', 'Science Olympiad Gold']
+    achievements: ['Basketball, Theatre']
   },
   {
     id: 2,
     year: '2020',
     title: 'Class 12th',
-    institution: 'Delhi Public School',
-    grade: '95.2%',
+    institution: 'Montfort Inter College, Lucknow',
+    grade: '90.2%',
     description: 'CBSE Board - PCM with Computer Science',
     icon: '📚',
-    achievements: ['JEE Main 98.5 percentile', 'KVPY Scholar']
+    achievements: ['Basketball, Coding']
   },
   {
     id: 3,
-    year: '2021',
+    year: '2022',
     title: 'B.Tech Year 1',
-    institution: 'IIT Delhi',
-    grade: '9.1 CGPA',
-    description: 'Computer Science & Engineering - Foundation year',
+    institution: 'PES University',
+    description: 'Computer Science & Engineering (AI-ML)',
     icon: '🎓',
-    achievements: ['Dean\'s List', 'Hackathon Winner']
+    achievements: ['Learned Basic Python and started with "Kal Se Pakka Padhunga"']
   },
   {
     id: 4,
-    year: '2022',
+    year: '2023',
     title: 'B.Tech Year 2',
-    institution: 'IIT Delhi',
-    grade: '9.3 CGPA',
+    institution: 'PES University',
     description: 'Core CS courses - Data Structures, Algorithms, OS',
     icon: '💻',
-    achievements: ['Research Assistant', 'Open Source Contributor']
+    achievements: ['Started going to hackathons but still consistent with "Kal Se Pakka Padhunga"']
   },
   {
-    id: 5,
-    year: '2023',
-    title: 'B.Tech Year 3',
-    institution: 'IIT Delhi',
-    grade: '9.4 CGPA',
-    description: 'Specialization in Machine Learning & AI',
-    icon: '🤖',
-    achievements: ['Published ML Paper', 'Teaching Assistant']
-  },
+  id: 5,
+  year: '2024',
+  title: 'B.Tech Year 3',
+  institution: 'PES University',
+  description: 'Specialization in Machine Learning & AI',
+  icon: '🤖',
+  achievements: [
+    'Won 2nd Prize in a Hackathon Codecrypt 2025 and 5th place in AI Coding Contest',
+    'Also upgraded to "Ab To Padh Hi Leta Hoon"'
+  ]
+},
+
   {
     id: 6,
-    year: '2024',
+    year: '2025',
     title: 'B.Tech Year 4',
-    institution: 'IIT Delhi',
+    institution: 'PES University',
     grade: 'Ongoing',
     description: 'Final year project & industry internships',
     icon: '🚀',
-    achievements: ['Industry Placement', 'Project Lead']
+    achievements: ['Applied to countless number of companies, faced hundreds of rejections, and thought "Yaar Padhna Tha Kya Pichle Teen Saal"']
   }
 ];
 
 const EducationSection = () => {
   const { ref, isInView } = useIntersectionObserver({ threshold: 0.2 });
   const [hoveredNode, setHoveredNode] = useState(null);
+
+  const handleGlowMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 16;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 16;
+    e.currentTarget.style.setProperty('--gx', `${x}px`);
+    e.currentTarget.style.setProperty('--gy', `${y}px`);
+  };
 
   const sectionVariants = {
     hidden: { opacity: 0 },
@@ -97,10 +106,17 @@ const EducationSection = () => {
     >
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
-          <motion.span className={styles.functionName} variants={nodeVariants}>
-            Degree_Ledger()
-          </motion.span>
-          <motion.h2 variants={nodeVariants}>Academic Journey</motion.h2>
+          <motion.h2
+            variants={nodeVariants}
+            className="glow-title"
+            onMouseMove={handleGlowMove}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.setProperty('--gx', '0px');
+              e.currentTarget.style.setProperty('--gy', '0px');
+            }}
+          >
+            Academic Journey
+          </motion.h2>
           <motion.p variants={nodeVariants}>
             From classroom to codebase
           </motion.p>
