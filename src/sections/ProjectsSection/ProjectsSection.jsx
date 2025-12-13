@@ -44,7 +44,7 @@ const projects = [
     method: 'GET',
     endpoint: '/projects/doc-image',
     name: 'Google Doc Image Saver',
-    description: 'This google chrome extension lets you download any image on google doc , which it does allow normally.',
+    description: 'This google chrome extension lets you download any image on google doc , which it does not allow normally.',
     status: 200,
     tech: ['HTML', 'CSS', 'JS'],
     response: {
