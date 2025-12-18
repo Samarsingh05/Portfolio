@@ -17,13 +17,15 @@
 
 .response a {
   color: var(--accent-primary);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .response a:hover {
   color: var(--accent-secondary);
+  text-shadow: 0 0 8px var(--accent-primary);
 }
 
 /* Terminal Styles */
