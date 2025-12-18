@@ -3,10 +3,9 @@ import { motion } from 'framer-motion';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 import styles from './AboutSection.module.css';
 import profilePic from '../../assets/profile.jpeg';
-console.log('PROFILE PIC URL ->', profilePic);
 
+/* ================= TERMINAL LINES ================= */
 
-/* ...terminalLines array unchanged... */
 const terminalLines = [
   { type: 'prompt', text: '~ $ whoami' },
   { type: 'response', text: 'Samar Singh' },
@@ -19,10 +18,9 @@ const terminalLines = [
 
   {
     type: 'response',
-    text: 'Resume',
     content: (
       <>
-        Resume   →{' '}
+        Resume →{' '}
         <a href="https://tinyurl.com/Samar-Singh" target="_blank" rel="noreferrer">
           open
         </a>
@@ -31,7 +29,6 @@ const terminalLines = [
   },
   {
     type: 'response',
-    text: 'LinkedIn',
     content: (
       <>
         LinkedIn →{' '}
@@ -43,10 +40,9 @@ const terminalLines = [
   },
   {
     type: 'response',
-    text: 'Github',
     content: (
       <>
-        GitHub   →{' '}
+        GitHub →{' '}
         <a href="https://github.com/Samarsingh05" target="_blank" rel="noreferrer">
           open
         </a>
@@ -55,33 +51,43 @@ const terminalLines = [
   },
 
   { type: 'prompt', text: '~ $ echo $PASSION' },
-  { type: 'response', text: 'Building products that are fun and can be actually used by people' },
+  {
+    type: 'response',
+    text: 'Building products that are fun and can be actually used by people'
+  },
   { type: 'prompt', text: '~ $ echo $GOAL' },
-  { type: 'response', text: 'Getting a really cool internship where I get to learn many new things and get ₹₹₹' },
+  {
+    type: 'response',
+    text: 'Getting a really cool internship where I get to learn many new things and get ₹₹₹'
+  },
   { type: 'prompt', text: '~ $ _' }
 ];
 
+/* ================= COMPONENT ================= */
 
 const AboutSection = () => {
   const { ref, isInView } = useIntersectionObserver({ threshold: 0.3 });
+
   const [visibleLines, setVisibleLines] = useState([]);
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
+
   const completedLinesRef = useRef(new Set());
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const typingSpeed = 90; // Slower typing
+
+  const typingSpeed = 90;
   const lineDelay = 600;
+
+  /* ================= RESET ON VIEW ================= */
 
   useEffect(() => {
     if (isInView) {
-      if (currentLineIndex === 0 && visibleLines.length === 0) {
-        setVisibleLines([]);
-        setCurrentLineIndex(0);
-        setCurrentCharIndex(0);
-        setIsTyping(true);
-        completedLinesRef.current.clear();
-      }
+      setVisibleLines([]);
+      setCurrentLineIndex(0);
+      setCurrentCharIndex(0);
+      setIsTyping(true);
+      completedLinesRef.current.clear();
     } else {
       setVisibleLines([]);
       setCurrentLineIndex(0);
@@ -91,6 +97,8 @@ const AboutSection = () => {
     }
   }, [isInView]);
 
+  /* ================= TYPING ENGINE ================= */
+
   useEffect(() => {
     if (!isTyping || currentLineIndex >= terminalLines.length) {
       setIsTyping(false);
@@ -99,61 +107,56 @@ const AboutSection = () => {
 
     const currentLine = terminalLines[currentLineIndex];
 
-// 1️⃣ JSX / rich content (links) → render instantly, no typing
-if (currentLine.content) {
-  setVisibleLines(prev => {
-    const newLines = [...prev];
-    newLines[currentLineIndex] = currentLine;
-    return newLines;
-  });
+    // 1️⃣ JSX / rich content → render instantly
+    if (currentLine.content) {
+      setVisibleLines(prev => {
+        const lines = [...prev];
+        lines[currentLineIndex] = currentLine;
+        return lines;
+      });
 
-  const timeout = setTimeout(() => {
-    setCurrentLineIndex(prev => prev + 1);
-    setCurrentCharIndex(0);
-  }, lineDelay);
+      const timeout = setTimeout(() => {
+        setCurrentLineIndex(prev => prev + 1);
+        setCurrentCharIndex(0);
+      }, lineDelay);
 
-  return () => clearTimeout(timeout);
-}
-
-// 2️⃣ Normal text typing (character by character)
-if (currentCharIndex < currentLine.text.length) {
-  const timeout = setTimeout(() => {
-    setCurrentCharIndex(prev => prev + 1);
-  }, currentLine.type === 'prompt' ? typingSpeed : typingSpeed / 2);
-
-  return () => clearTimeout(timeout);
-}
-
-// 3️⃣ Line finished → commit it and move to next line
-const lineKey = `${currentLineIndex}-${currentLine.text}`;
-
-if (!completedLinesRef.current.has(lineKey)) {
-  completedLinesRef.current.add(lineKey);
-  setVisibleLines(prev => {
-    const newLines = [...prev];
-    newLines[currentLineIndex] = currentLine;
-    return newLines;
-  });
-}
-
-const timeout = setTimeout(() => {
-  setCurrentLineIndex(prev => {
-    if (prev + 1 >= terminalLines.length) {
-      setIsTyping(false);
+      return () => clearTimeout(timeout);
     }
-    return prev + 1;
-  });
-  setCurrentCharIndex(0);
-}, lineDelay);
 
-return () => clearTimeout(timeout);
+    // 2️⃣ Character typing
+    if (currentCharIndex < currentLine.text.length) {
+      const timeout = setTimeout(() => {
+        setCurrentCharIndex(prev => prev + 1);
+      }, currentLine.type === 'prompt' ? typingSpeed : typingSpeed / 2);
 
+      return () => clearTimeout(timeout);
+    }
+
+    // 3️⃣ Line completed
+    const lineKey = `${currentLineIndex}-${currentLine.text}`;
+
+    if (!completedLinesRef.current.has(lineKey)) {
+      completedLinesRef.current.add(lineKey);
+      setVisibleLines(prev => {
+        const lines = [...prev];
+        lines[currentLineIndex] = currentLine;
+        return lines;
+      });
+    }
+
+    const timeout = setTimeout(() => {
+      setCurrentLineIndex(prev => prev + 1);
+      setCurrentCharIndex(0);
+    }, lineDelay);
+
+    return () => clearTimeout(timeout);
   }, [isTyping, currentLineIndex, currentCharIndex]);
+
+  /* ================= ANIMATIONS ================= */
 
   const sectionVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 0.8, ease: 'easeOut' } },
-    exit: { opacity: 0, rotate: 5, y: -100, transition: { duration: 0.6, ease: 'easeIn' } }
+    visible: { opacity: 1, transition: { duration: 0.8, ease: 'easeOut' } }
   };
 
   const terminalVariants = {
@@ -166,6 +169,8 @@ return () => clearTimeout(timeout);
     visible: { opacity: 1, x: 0, scale: 1, transition: { duration: 0.6, delay: 0.4 } }
   };
 
+  /* ================= JSX ================= */
+
   return (
     <motion.section
       ref={ref}
@@ -176,8 +181,13 @@ return () => clearTimeout(timeout);
       animate={isInView ? 'visible' : 'hidden'}
     >
       <div className={styles.container}>
-        {/* Terminal Window */}
-        <motion.div className={styles.terminalContainer} variants={terminalVariants} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
+        {/* Terminal */}
+        <motion.div
+          className={styles.terminalContainer}
+          variants={terminalVariants}
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+        >
           <div className={styles.terminalHeader}>
             <div className={styles.terminalButtons}>
               <span className={styles.btnClose}></span>
@@ -186,68 +196,78 @@ return () => clearTimeout(timeout);
             </div>
             <span className={styles.terminalTitle}>terminal — bash</span>
           </div>
+
           <div className={styles.terminalBody}>
             {visibleLines.map((line, index) => (
-              <div key={`line-${index}`}
- className={styles.terminalLine}>
+              <div key={`line-${index}`} className={styles.terminalLine}>
                 {line.type === 'prompt' ? (
                   <span className={styles.prompt}>{line.text}</span>
                 ) : (
                   <span className={styles.response}>
-                    {line.content ? line.content : line.text}
+                    {line.content || line.text}
                   </span>
                 )}
-
               </div>
             ))}
 
-            {currentLineIndex < terminalLines.length && currentCharIndex > 0 && terminalLines[currentLineIndex].text &&
-currentCharIndex < terminalLines[currentLineIndex].text.length && (
-              <div className={styles.terminalLine} key={`typing-${currentLineIndex}`}>
-                {terminalLines[currentLineIndex].type === 'prompt' ? (
-                  <span className={styles.prompt}>
-                    {terminalLines[currentLineIndex].text.substring(0, currentCharIndex)}
-                    <span className={styles.cursor}>▊</span>
-                  </span>
-                ) : (
-                  <span className={styles.response}>
-                    {terminalLines[currentLineIndex].text.substring(0, currentCharIndex)}
-                    <span className={styles.cursor}>▊</span>
-                  </span>
-                )}
-              </div>
-            )}
+            {currentLineIndex < terminalLines.length &&
+              currentCharIndex > 0 &&
+              terminalLines[currentLineIndex].text &&
+              currentCharIndex < terminalLines[currentLineIndex].text.length && (
+                <div
+                  className={styles.terminalLine}
+                  key={`typing-${currentLineIndex}`}
+                >
+                  {terminalLines[currentLineIndex].type === 'prompt' ? (
+                    <span className={styles.prompt}>
+                      {terminalLines[currentLineIndex].text.substring(
+                        0,
+                        currentCharIndex
+                      )}
+                      <span className={styles.cursor}>▊</span>
+                    </span>
+                  ) : (
+                    <span className={styles.response}>
+                      {terminalLines[currentLineIndex].text.substring(
+                        0,
+                        currentCharIndex
+                      )}
+                      <span className={styles.cursor}>▊</span>
+                    </span>
+                  )}
+                </div>
+              )}
           </div>
         </motion.div>
 
-        {/* Photo Frame */}
+        {/* Photo */}
         <motion.div
           className={styles.photoContainer}
           variants={photoVariants}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
-          onMouseMove={(e) => {
+          onMouseMove={e => {
             const rect = e.currentTarget.getBoundingClientRect();
-            const offsetX = e.clientX - rect.left;
-            const offsetY = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateY = ((offsetX - centerX) / centerX) * 10;
-            const rotateX = -((offsetY - centerY) / centerY) * 10;
-            setTilt({ x: rotateY, y: rotateX });
+            const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
+            const y = -((e.clientY - rect.top) / rect.height - 0.5) * 20;
+            setTilt({ x, y });
           }}
           onMouseLeave={() => setTilt({ x: 0, y: 0 })}
         >
           <div className={styles.photoFrame}>
             <div className={styles.photoGlow}></div>
-            <div className={styles.photoInner} style={{ transform: `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg) translateZ(12px)` }}>
+            <div
+              className={styles.photoInner}
+              style={{
+                transform: `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg) translateZ(12px)`
+              }}
+            >
               <img
                 src={profilePic}
                 alt="Samar Singh"
                 className={styles.photoImage}
                 loading="lazy"
                 decoding="async"
-                onLoad={() => console.log('profile image loaded')}
               />
             </div>
             <div className={styles.frameDecor}>
@@ -255,19 +275,16 @@ currentCharIndex < terminalLines[currentLineIndex].text.length && (
             </div>
           </div>
 
-          <motion.div className={styles.statusBadge} animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 2, repeat: Infinity }}>
+          <motion.div
+            className={styles.statusBadge}
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
             <span className={styles.statusDot}></span>
             Available for work
           </motion.div>
         </motion.div>
       </div>
-
-      <motion.div className={styles.scrollIndicator} animate={{ y: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-        <span>Scroll to explore</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M12 5v14M5 12l7 7 7-7" />
-        </svg>
-      </motion.div>
     </motion.section>
   );
 };
