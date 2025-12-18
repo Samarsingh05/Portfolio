@@ -15,6 +15,17 @@
   align-items: center;
 }
 
+.response a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.response a:hover {
+  color: var(--accent-secondary);
+}
+
 /* Terminal Styles */
 .terminalContainer {
   background: var(--terminal-bg);
