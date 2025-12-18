@@ -19,6 +19,7 @@ const terminalLines = [
 
   {
     type: 'response',
+    text: 'Resume',
     content: (
       <>
         Resume   →{' '}
@@ -30,6 +31,7 @@ const terminalLines = [
   },
   {
     type: 'response',
+    text: 'LinkedIn',
     content: (
       <>
         LinkedIn →{' '}
@@ -41,6 +43,7 @@ const terminalLines = [
   },
   {
     type: 'response',
+    text: 'Github',
     content: (
       <>
         GitHub   →{' '}
@@ -97,7 +100,7 @@ const AboutSection = () => {
     const currentLine = terminalLines[currentLineIndex];
 
 // 1️⃣ JSX / rich content (links) → render instantly, no typing
-if (!currentLine.text) {
+if (currentLine.content) {
   setVisibleLines(prev => {
     const newLines = [...prev];
     newLines[currentLineIndex] = currentLine;
@@ -185,7 +188,8 @@ return () => clearTimeout(timeout);
           </div>
           <div className={styles.terminalBody}>
             {visibleLines.map((line, index) => (
-              <div key={`${index}-${line.text}`} className={styles.terminalLine}>
+              <div key={`line-${index}`}
+ className={styles.terminalLine}>
                 {line.type === 'prompt' ? (
                   <span className={styles.prompt}>{line.text}</span>
                 ) : (
@@ -197,7 +201,8 @@ return () => clearTimeout(timeout);
               </div>
             ))}
 
-            {currentLineIndex < terminalLines.length && currentCharIndex > 0 && currentCharIndex < terminalLines[currentLineIndex].text.length && (
+            {currentLineIndex < terminalLines.length && currentCharIndex > 0 && terminalLines[currentLineIndex].text &&
+currentCharIndex < terminalLines[currentLineIndex].text.length && (
               <div className={styles.terminalLine} key={`typing-${currentLineIndex}`}>
                 {terminalLines[currentLineIndex].type === 'prompt' ? (
                   <span className={styles.prompt}>
