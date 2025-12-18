@@ -10,15 +10,54 @@ console.log('PROFILE PIC URL ->', profilePic);
 const terminalLines = [
   { type: 'prompt', text: '~ $ whoami' },
   { type: 'response', text: 'Samar Singh' },
+
   { type: 'prompt', text: '~ $ cat about.txt' },
   { type: 'response', text: 'Born in Lucknow and Based in Bangalore, India 🇮🇳' },
   { type: 'response', text: 'Full Stack Developer & ML Enthusiast' },
+
+  { type: 'prompt', text: '~ $ ls links/' },
+
+  {
+    type: 'response',
+    content: (
+      <>
+        Resume   →{' '}
+        <a href="https://tinyurl.com/Samar-Singh" target="_blank" rel="noreferrer">
+          open
+        </a>
+      </>
+    )
+  },
+  {
+    type: 'response',
+    content: (
+      <>
+        LinkedIn →{' '}
+        <a href="https://tinyurl.com/Samar-Singh-LinkedIn" target="_blank" rel="noreferrer">
+          open
+        </a>
+      </>
+    )
+  },
+  {
+    type: 'response',
+    content: (
+      <>
+        GitHub   →{' '}
+        <a href="https://github.com/Samarsingh05" target="_blank" rel="noreferrer">
+          open
+        </a>
+      </>
+    )
+  },
+
   { type: 'prompt', text: '~ $ echo $PASSION' },
   { type: 'response', text: 'Building products that are fun and can be actually used by people' },
   { type: 'prompt', text: '~ $ echo $GOAL' },
   { type: 'response', text: 'Getting a really cool internship where I get to learn many new things and get ₹₹₹' },
   { type: 'prompt', text: '~ $ _' }
 ];
+
 
 const AboutSection = () => {
   const { ref, isInView } = useIntersectionObserver({ threshold: 0.3 });
@@ -57,35 +96,55 @@ const AboutSection = () => {
 
     const currentLine = terminalLines[currentLineIndex];
 
-    if (currentCharIndex < currentLine.text.length) {
-      const timeout = setTimeout(() => {
-        setCurrentCharIndex(prev => prev + 1);
-      }, currentLine.type === 'prompt' ? typingSpeed : typingSpeed / 2);
-      return () => clearTimeout(timeout);
-    } else {
-      const lineKey = `${currentLineIndex}-${currentLine.text}`;
-      if (!completedLinesRef.current.has(lineKey)) {
-        completedLinesRef.current.add(lineKey);
-        setVisibleLines(prev => {
-          if (prev[currentLineIndex] && prev[currentLineIndex].text === currentLine.text) {
-            return prev;
-          }
-          const newLines = [...prev];
-          newLines[currentLineIndex] = currentLine;
-          return newLines;
-        });
-      }
-      const timeout = setTimeout(() => {
-        setCurrentLineIndex(prev => {
-          if (prev + 1 >= terminalLines.length) {
-            setIsTyping(false);
-          }
-          return prev + 1;
-        });
-        setCurrentCharIndex(0);
-      }, lineDelay);
-      return () => clearTimeout(timeout);
+// 1️⃣ JSX / rich content (links) → render instantly, no typing
+if (!currentLine.text) {
+  setVisibleLines(prev => {
+    const newLines = [...prev];
+    newLines[currentLineIndex] = currentLine;
+    return newLines;
+  });
+
+  const timeout = setTimeout(() => {
+    setCurrentLineIndex(prev => prev + 1);
+    setCurrentCharIndex(0);
+  }, lineDelay);
+
+  return () => clearTimeout(timeout);
+}
+
+// 2️⃣ Normal text typing (character by character)
+if (currentCharIndex < currentLine.text.length) {
+  const timeout = setTimeout(() => {
+    setCurrentCharIndex(prev => prev + 1);
+  }, currentLine.type === 'prompt' ? typingSpeed : typingSpeed / 2);
+
+  return () => clearTimeout(timeout);
+}
+
+// 3️⃣ Line finished → commit it and move to next line
+const lineKey = `${currentLineIndex}-${currentLine.text}`;
+
+if (!completedLinesRef.current.has(lineKey)) {
+  completedLinesRef.current.add(lineKey);
+  setVisibleLines(prev => {
+    const newLines = [...prev];
+    newLines[currentLineIndex] = currentLine;
+    return newLines;
+  });
+}
+
+const timeout = setTimeout(() => {
+  setCurrentLineIndex(prev => {
+    if (prev + 1 >= terminalLines.length) {
+      setIsTyping(false);
     }
+    return prev + 1;
+  });
+  setCurrentCharIndex(0);
+}, lineDelay);
+
+return () => clearTimeout(timeout);
+
   }, [isTyping, currentLineIndex, currentCharIndex]);
 
   const sectionVariants = {
@@ -127,7 +186,14 @@ const AboutSection = () => {
           <div className={styles.terminalBody}>
             {visibleLines.map((line, index) => (
               <div key={`${index}-${line.text}`} className={styles.terminalLine}>
-                {line.type === 'prompt' ? <span className={styles.prompt}>{line.text}</span> : <span className={styles.response}>{line.text}</span>}
+                {line.type === 'prompt' ? (
+                  <span className={styles.prompt}>{line.text}</span>
+                ) : (
+                  <span className={styles.response}>
+                    {line.content ? line.content : line.text}
+                  </span>
+                )}
+
               </div>
             ))}
 
