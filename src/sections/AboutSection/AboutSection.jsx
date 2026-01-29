@@ -21,7 +21,7 @@ const terminalLines = [
     content: (
       <>
         Resume →{' '}
-        <a href="https://tinyurl.com/Samar-Singh" target="_blank" rel="noreferrer">
+        <a href="https://tinyurl.com/Resume-Samar" target="_blank" rel="noreferrer">
           open
         </a>
       </>
