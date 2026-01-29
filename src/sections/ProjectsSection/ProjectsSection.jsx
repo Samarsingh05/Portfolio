@@ -11,7 +11,7 @@ const projects = [
     name: 'AI Arena',
     description:
       'A prompt-based AI comparison platform that allows users to compare responses from multiple AI models side by side, with persistent storage of prompts and outputs.',
-    status: 201,
+    status: 200,
     tech: [
       'React',
       'JavaScript',
@@ -24,9 +24,9 @@ const projects = [
     response: {
       success: true,
       data: {
+        models: 5,
         prompts_saved: true,
-        comparison_mode: 'side-by-side',
-        persistence: 'Supabase PostgreSQL'
+        parameters: "cost and time"
       }
     },
     links: {
