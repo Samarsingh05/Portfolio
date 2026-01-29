@@ -37,7 +37,7 @@ const education = [
     institution: 'PES University',
     description: 'Computer Science & Engineering (AI-ML)',
     icon: '🎓',
-    achievements: ['Learned Basic Python and started with "Kal Se Pakka Padhunga"']
+    achievements: ['Learned Basic Python and C']
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ const education = [
     institution: 'PES University',
     description: 'Core CS courses - Data Structures, Algorithms, OS',
     icon: '💻',
-    achievements: ['Started going to hackathons but still consistent with "Kal Se Pakka Padhunga"']
+    achievements: ['Started going to hackathons and developed interest in Web Dev']
   },
   {
   id: 5,
@@ -57,7 +57,7 @@ const education = [
   icon: '🤖',
   achievements: [
     'Won 2nd Prize in a Hackathon Codecrypt 2025 and 5th place in AI Coding Contest',
-    'Also upgraded to "Ab To Padh Hi Leta Hoon"'
+    'Started making small websites and deploying them'
   ]
 },
 
@@ -69,7 +69,7 @@ const education = [
     grade: 'Ongoing',
     description: 'Final year project & industry internships',
     icon: '🚀',
-    achievements: ['Applied to countless number of companies, faced hundreds of rejections, and thought "Yaar Padhna Tha Kya Pichle Teen Saal"']
+    achievements: ['Started looking for internship and job opportunities']
   }
 ];
 
